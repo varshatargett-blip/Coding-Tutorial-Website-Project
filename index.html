@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TpointTech — Learn to Code</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+      rel="stylesheet"/>
+
+    <style>
+  /* NEW NAVBAR CSS OVERRIDE FOR INDEX.HTML */
+  :root {
+    --nav-h: 62px;
+    --strip-h: 38px;
+    --nvbg: #0f2435;
+    --acc: #1a7fa8;
+    --t: 0.18s;
+  }
+  
+  /* Push the main body down so it isn't hidden under the double navbar */
+  body { padding-top: calc(var(--nav-h) + var(--strip-h)) !important; }
+
+  .navbar { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); background: var(--nvbg); z-index: 500; border-bottom: 1px solid rgba(255,255,255,.06); }
+  .nav-in { height: 100%; padding: 0 20px; display: flex; align-items: center; gap: 14px; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; padding: 6px; background: none; border: none; flex-shrink: 0; }
+  .hamburger span { display: block; width: 20px; height: 2px; background: rgba(255,255,255,.8); border-radius: 2px; transition: all .2s; }
+  .nav-logo { display: flex; align-items: center; gap: 9px; flex-shrink: 0; margin-right: 6px; }
+  .logo-mark { width: 32px; height: 32px; background: var(--acc); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 12px; color: #fff; flex-shrink: 0; }
+  .logo-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; color: #fff; }
+  .nav-search { flex: 1; max-width: 400px; position: relative; margin: 0; }
+  .nav-search input { width: 100%; height: 36px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); border-radius: 8px; padding: 0 38px 0 14px; font-family: 'Outfit', sans-serif; font-size: 13.5px; color: rgba(255,255,255,.85); outline: none; transition: border-color var(--t), background var(--t); margin: 0; }
+  .nav-search input::placeholder { color: rgba(255,255,255,.35); }
+  .nav-search input:focus { border-color: var(--acc); background: rgba(255,255,255,.1); }
+  .nav-search-ico { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,.3); pointer-events: none; }
+  .nav-right { display: flex; align-items: center; gap: 8px; margin-left: auto; flex-shrink: 0; }
+  .theme-btn { width: 34px; height: 34px; border-radius: 8px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.06); color: rgba(255,255,255,.7); display: flex; align-items: center; justify-content: center; transition: background var(--t); font-size: 15px; cursor: pointer; padding: 0;}
+  .theme-btn:hover { background: rgba(255,255,255,.12); color: #fff; }
+  .nav-btn-signin { height: 34px; padding: 0 16px; background: var(--acc); color: #fff; border: none; border-radius: 8px; font-size: 13.5px; font-weight: 600; cursor: pointer; transition: opacity var(--t), transform var(--t); margin: 0; }
+  .nav-btn-signin:hover { opacity: .88; transform: translateY(-1px); }
+
+  /* Topic strip */
+  .tstrip { position: fixed; top: var(--nav-h); left: 0; right: 0; height: var(--strip-h); background: #1e3a52; border-bottom: 1px solid rgba(255,255,255,.08); z-index: 490; overflow: hidden; margin: 0;}
+  .tstrip-in { height: 100%; display: flex; align-items: center; overflow-x: auto; scrollbar-width: none; padding: 0 12px; gap: 2px; }
+  .tstrip-in::-webkit-scrollbar { display: none; }
+  .tstrip-in a { white-space: nowrap; font-size: 12.5px; font-weight: 500; color: rgba(255,255,255,.6); padding: 4px 11px; border-radius: 5px; transition: background var(--t), color var(--t); text-decoration: none; }
+  .tstrip-in a:hover { color: #fff; background: rgba(255,255,255,.1); }
+  .tstrip-in a.active { color: #fff; background: var(--acc); font-weight: 600; }
+
+  @media(max-width:900px){ .hamburger{display:flex;} .nav-search{max-width:180px;} }
+  @media(max-width:480px){ .nav-search{display:none;} }
+</style>
+
+  </head>
+  <body>
+    <!-- ───────────────── NAVBAR ───────────────── -->
+    <header class="navbar">
+      <div class="nav-in">
+        <button class="hamburger" id="hamburger" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+        <a href="index.html" class="nav-logo" style="text-decoration: none">
+          <div class="logo-mark">&lt;/&gt;</div>
+          <span class="logo-name">TpointTech</span>
+        </a>
+        <div class="nav-search">
+          <input
+            type="text"
+            placeholder="Search tutorials… (Ctrl+K)"
+            id="gsearch"
+            autocomplete="off"
+          />
+          <svg
+            class="nav-search-ico"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+        </div>
+        <div class="nav-right">
+          <button class="theme-btn" id="themeBtn" title="Toggle dark mode">
+            🌙
+          </button>
+          <button class="nav-btn-signin">Sign In</button>
+        </div>
+      </div>
+    </header>
+
+    <nav class="tstrip" aria-label="Tutorial topics">
+      <div class="tstrip-in">
+        <a href="html.html">HTML</a>
+        <a href="css.html">CSS</a>
+        <a href="javascript.html">JavaScript</a>
+        <a href="sql.html">SQL</a>
+        <a href="python.html">Python</a>
+        <a href="java.html">Java</a>
+        <a href="php.html">PHP</a>
+        <a href="c.html">C</a>
+        <a href="cpp.html">C++</a>
+        <a href="bootstrap.html">Bootstrap</a>
+        <a href="react.html">React</a>
+        <a href="mysql.html">MySQL</a>
+        <a href="jquery.html">jQuery</a>
+        <a href="nodejs.html">Node.js</a>
+        <a href="django.html">Django</a>
+        <a href="dsa.html">DSA</a>
+        <a href="dsa-cpp.html">DSA C++</a>
+        <a href="dsa-java.html">DSA Java</a>
+        <a href="mongodb.html">MongoDB</a>
+        <a href="nextjs.html">Next.js</a>
+        <a href="angular.html">Angular</a>
+      </div>
+    </nav>
+
+    <!-- ───────────────── HERO ───────────────── -->
+    <section class="hero">
+      <div class="hero-content">
+        <p class="hero-eyebrow">Free. Open. Unlimited.</p>
+        <h1 class="hero-title">
+          Welcome to <span class="accent">TpointTech</span>
+        </h1>
+        <p class="hero-subtitle">
+          Get access to 500+ tutorials from top instructors around the world in
+          one place.
+        </p>
+
+        <form class="search-bar" onsubmit="return false;">
+          <input
+            type="text"
+            placeholder="Search tutorials, languages, topics…"
+          />
+          <button type="submit">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+          </button>
+        </form>
+      </div>
+
+      <div class="hero-visual">
+        <div class="code-badge">
+          <span>&lt;/&gt;</span>
+        </div>
+        <div class="floating-tag tag-1">Python</div>
+        <div class="floating-tag tag-2">React</div>
+        <div class="floating-tag tag-3">SQL</div>
+        <div class="blob"></div>
+      </div>
+    </section>
+
+    <section class="courses-section">
+      <div class="left-content">
+        <h1>Courses</h1>
+        <p>Explore our most popular programming languages & frameworks</p>
+      </div>
+
+      <div class="courses-container">
+        <button class="nav-btn left" onclick="slideLeft()">❮</button>
+
+        <div class="courses-wrapper" id="slider">
+          <!-- CARD -->
+          <div class="course-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/732/732212.png" />
+            <h3>HTML</h3>
+            <p>Structure of web pages</p>
+          </div>
+
+          <!-- CSS -->
+          <div class="course-card">
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+            />
+            <h3>CSS</h3>
+            <p>Design & styling websites</p>
+          </div>
+
+          <!-- JavaScript -->
+          <div class="course-card">
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+            />
+            <h3>JavaScript</h3>
+            <p>Add interactivity</p>
+          </div>
+
+          <!-- SQL -->
+          <div class="course-card">
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg"
+            />
+            <h3>SQL</h3>
+            <p>Manage databases</p>
+          </div>
+
+          <!-- Python -->
+          <div class="course-card">
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+            />
+            <h3>Python</h3>
+            <p>AI & automation</p>
+          </div>
+
+          <!-- Java -->
+          <div class="course-card">
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+            />
+            <h3>Java</h3>
+            <p>OOP & backend</p>
+          </div>
+
+          <!-- PHP -->
+          <div class="course-card">
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg"
+            />
+            <h3>PHP</h3>
+            <p>Server-side scripting</p>
+          </div>
+
+          <!-- C -->
+          <div class="course-card">
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg"
+            />
+            <h3>C</h3>
+            <p>Programming basics</p>
+          </div>
+
+          <!-- C++ -->
+          <div class="course-card">
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
+            />
+            <h3>C++</h3>
+            <p>High performance apps</p>
+          </div>
+
+          <!-- Bootstrap -->
+          <div class="course-card">
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg"
+            />
+            <h3>Bootstrap</h3>
+            <p>Responsive UI</p>
+          </div>
+
+          <!-- React -->
+          <div class="course-card">
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+            />
+            <h3>React</h3>
+            <p>Frontend library</p>
+          </div>
+
+          <!-- MySQL -->
+          <div class="course-card">
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg"
+            />
+            <h3>MySQL</h3>
+            <p>Relational database system</p>
+          </div>
+
+          <!-- jQuery -->
+          <div class="course-card">
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jquery/jquery-original.svg"
+            />
+            <h3>jQuery</h3>
+            <p>Simplify JavaScript tasks</p>
+          </div>
+
+          <!-- NodeJS -->
+          <div class="course-card">
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+            />
+            <h3>NodeJS</h3>
+            <p>Backend JavaScript runtime</p>
+          </div>
+
+          <!-- Django -->
+          <div class="course-card">
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg"
+            />
+            <h3>Django</h3>
+            <p>Python web framework</p>
+          </div>
+
+          <!-- DSA -->
+          <div class="course-card">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/2103/2103633.png"
+            />
+            <h3>DSA</h3>
+            <p>Data structures & algorithms</p>
+          </div>
+
+          <!-- DSA C++ -->
+          <div class="course-card">
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
+            />
+            <h3>DSA with C++</h3>
+            <p>DSA using C++</p>
+          </div>
+
+          <!-- DSA Java -->
+          <div class="course-card">
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+            />
+            <h3>DSA with Java</h3>
+            <p>DSA using Java</p>
+          </div>
+
+          <!-- MongoDB -->
+          <div class="course-card">
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+            />
+            <h3>MongoDB</h3>
+            <p>NoSQL database</p>
+          </div>
+
+          <!-- NextJS -->
+          <div class="course-card">
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
+            />
+            <h3>NextJS</h3>
+            <p>React fullstack framework</p>
+          </div>
+
+          <!-- Angular -->
+          <div class="course-card">
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg"
+            />
+            <h3>Angular</h3>
+            <p>Frontend web framework</p>
+          </div>
+        </div>
+
+        <button class="nav-btn right" onclick="slideRight()">❯</button>
+      </div>
+    </section>
+    <br /><br />
+    <!-- ───────────────── BANNER ───────────────── -->
+    <section class="banner">
+      <div class="banner-inner">
+        <div class="banner-text">
+          <h2>Start learning today — it's 100% free</h2>
+          <p>
+            Join millions of learners who use TpointTech to advance their
+            careers and build real-world projects.
+          </p>
+          <a href="#courses" class="banner-btn">Browse All Courses</a>
+        </div>
+        <div class="banner-stats">
+          <div class="stat">
+            <span class="stat-num">500+</span>
+            <span class="stat-label">Tutorials</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">12+</span>
+            <span class="stat-label">Languages</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">1M+</span>
+            <span class="stat-label">Learners</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <br /><br />
+    <!-- ───────────────── FOOTER ───────────────── -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="nav-logo">
+            <span class="logo-icon">&lt;/&gt;</span>
+            <span class="logo-text">TpointTech</span>
+          </div>
+          <p>
+            We deliver comprehensive tutorials, interview Q&As, MCQs, and study
+            materials on leading programming languages and web technologies like
+            Data Science, MEAN/MERN full stack development, Python, Java, C++,
+            C, HTML, React, Angular, PHP and much more to support your learning
+            and career growth.
+          </p>
+        </div>
+
+        <div class="footer-contact">
+          <h4>Contact Info</h4>
+          <ul>
+            <li>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              G-13, 2nd Floor, Sec-3, Noida, UP, 201301, India
+            </li>
+            <li>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+              hr@tpointtech.com
+            </li>
+            <li>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.65 3.4 2 2 0 0 1 3.62 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"
+                />
+              </svg>
+              +91-9599086977
+            </li>
+          </ul>
+
+          <div class="social-links">
+            <a href="#" aria-label="Facebook" class="social-link">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
+                />
+              </svg>
+            </a>
+            <a href="#" aria-label="Twitter/X" class="social-link">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                />
+              </svg>
+            </a>
+            <a href="#" aria-label="LinkedIn" class="social-link">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"
+                />
+                <circle cx="4" cy="4" r="2" />
+              </svg>
+            </a>
+            <a href="#" aria-label="Telegram" class="social-link">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-16.5 7.5a2.25 2.25 0 0 0 .126 4.073l3.9 1.205 1.569 4.861a1.5 1.5 0 0 0 2.54.569l2.012-2.013 3.818 2.805a2.25 2.25 0 0 0 3.484-1.352l3-14.25a2.25 2.25 0 0 0-2.927-2.613zM9.75 14.47l-1.5-4.64 8.25-4.73-6.75 9.37z"
+                />
+              </svg>
+            </a>
+            <a href="#" aria-label="YouTube" class="social-link">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"
+                />
+              </svg>
+            </a>
+            <a href="#" aria-label="Instagram" class="social-link">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© Copyright <a href="#">TpointTech.com</a>. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Learn jQuery from scratch with TpointTech. Free jQuery tutorial covering selectors, events, effects, animations, and AJAX."/>
+  <meta name="keywords" content="jQuery tutorial, learn jQuery, JavaScript library, jQuery effects, AJAX"/>
+  <meta property="og:title" content="jQuery Tutorial — TpointTech"/>
+  <meta property="og:type" content="website"/>
+  <title>jQuery Tutorial — TpointTech | Learn jQuery Free</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+:root{--nav-h:62px;--strip-h:38px;--prog-h:3px;--sb-w:268px;--ad-w:290px;--ease:cubic-bezier(.4,0,.2,1);--t:.18s;--bg:#f7f8fa;--sur:#fff;--sur2:#f0f2f5;--bdr:#e3e6ea;--bdrl:#edf0f3;--t1:#0d1117;--t2:#3d4451;--t3:#6b7280;--t4:#9ca3af;--acc:#1a7fa8;--acd:#e8f4f9;--acg:rgba(26,127,168,.15);--grn:#16a34a;--grnd:#dcfce7;--amb:#d97706;--ambd:#fef3c7;--red:#dc2626;--redd:#fee2e2;--bld:#dbeafe;--nvbg:#0f2435;--sbbg:#fff;--cdbg:#0d1117;--cdsr:#161b22;--sh1:0 1px 3px rgba(0,0,0,.06);--sh2:0 4px 12px rgba(0,0,0,.08);--sh3:0 12px 32px rgba(0,0,0,.10);--r1:6px;--r2:10px;--r3:14px}
+body.dark{--bg:#0d1117;--sur:#161b22;--sur2:#1c2330;--bdr:#21262d;--bdrl:#1c2330;--t1:#e6edf3;--t2:#b1bac4;--t3:#7d8590;--t4:#484f58;--acd:#0d2535;--grnd:#0a2818;--ambd:#2d1f04;--redd:#2a0a0a;--bld:#0c1a2e;--nvbg:#010409;--sbbg:#0d1117;--sh1:0 1px 3px rgba(0,0,0,.3);--sh2:0 4px 12px rgba(0,0,0,.4);--sh3:0 12px 32px rgba(0,0,0,.5)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--t1);line-height:1.7;overflow-x:hidden;transition:background var(--t),color var(--t)}
+a{text-decoration:none;color:inherit}
+img{display:block;max-width:100%}
+button{font-family:inherit;cursor:pointer}
+
+/* Progress */
+#rp{position:fixed;top:0;left:0;right:0;height:var(--prog-h);z-index:1000;background:var(--bdr)}
+#rpb{height:100%;width:0%;background:linear-gradient(90deg,var(--acc),#34d1bf);transition:width .1s linear;box-shadow:0 0 10px rgba(26,127,168,.5)}
+
+/* Navbar */
+.navbar{position:fixed;top:var(--prog-h);left:0;right:0;height:var(--nav-h);background:var(--nvbg);z-index:500;border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-in{height:100%;padding:0 20px;display:flex;align-items:center;gap:14px}
+.hamburger{display:none;flex-direction:column;gap:5px;padding:6px;background:none;border:none;flex-shrink:0}
+.hamburger span{display:block;width:20px;height:2px;background:rgba(255,255,255,.8);border-radius:2px;transition:all .2s}
+.nav-logo{display:flex;align-items:center;gap:9px;flex-shrink:0;margin-right:6px}
+.logo-mark{width:32px;height:32px;background:var(--acc);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:12px;color:#fff;flex-shrink:0}
+.logo-name{font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:#fff}
+.nav-search{flex:1;max-width:400px;position:relative}
+.nav-search input{width:100%;height:36px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:0 38px 0 14px;font-family:'Outfit',sans-serif;font-size:13.5px;color:rgba(255,255,255,.85);outline:none;transition:border-color var(--t),background var(--t)}
+.nav-search input::placeholder{color:rgba(255,255,255,.35)}
+.nav-search input:focus{border-color:var(--acc);background:rgba(255,255,255,.1)}
+.nav-search-ico{position:absolute;right:10px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.3);pointer-events:none}
+.nav-hint{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:10.5px;color:rgba(255,255,255,.22);background:rgba(255,255,255,.07);padding:2px 6px;border-radius:4px;pointer-events:none;font-family:'JetBrains Mono',monospace}
+.nav-right{display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0}
+.theme-btn{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;transition:background var(--t);font-size:15px}
+.theme-btn:hover{background:rgba(255,255,255,.12);color:#fff}
+.nav-btn-signin{height:34px;padding:0 16px;background:var(--acc);color:#fff;border:none;border-radius:8px;font-size:13.5px;font-weight:600;transition:opacity var(--t),transform var(--t)}
+.nav-btn-signin:hover{opacity:.88;transform:translateY(-1px)}
+
+/* Topic strip */
+.tstrip{position:fixed;top:calc(var(--prog-h) + var(--nav-h));left:0;right:0;height:var(--strip-h);background:#1e3a52;border-bottom:1px solid rgba(255,255,255,.08);z-index:490;overflow:hidden}
+.tstrip-in{height:100%;display:flex;align-items:center;overflow-x:auto;scrollbar-width:none;padding:0 12px;gap:2px}
+.tstrip-in::-webkit-scrollbar{display:none}
+.tstrip-in a{white-space:nowrap;font-size:12.5px;font-weight:500;color:rgba(255,255,255,.6);padding:4px 11px;border-radius:5px;transition:background var(--t),color var(--t)}
+.tstrip-in a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.tstrip-in a.active{color:#fff;background:var(--acc);font-weight:600}
+
+/* Shell */
+.shell{display:flex;margin-top:calc(var(--prog-h) + var(--nav-h) + var(--strip-h));min-height:calc(100vh - var(--prog-h) - var(--nav-h) - var(--strip-h))}
+
+/* Sidebar */
+.sidebar{width:var(--sb-w);flex-shrink:0;position:fixed;top:calc(var(--prog-h) + var(--nav-h) + var(--strip-h));left:0;bottom:0;background:var(--sbbg);border-right:1px solid var(--bdr);display:flex;flex-direction:column;z-index:400;transition:transform var(--t) var(--ease),background var(--t)}
+.sb-top{padding:14px 14px 10px;border-bottom:1px solid var(--bdr);flex-shrink:0}
+.sb-lang{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.lang-badge{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:11px;flex-shrink:0;letter-spacing:-.3px;background:#0769AD;color:#fff;}
+.sb-info h3{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--t1);line-height:1.2}
+.sb-info span{font-size:11.5px;color:var(--t3)}
+.sb-search{position:relative}
+.sb-search input{width:100%;height:31px;background:var(--sur2);border:1px solid var(--bdr);border-radius:var(--r1);padding:0 28px 0 10px;font-family:'Outfit',sans-serif;font-size:12.5px;color:var(--t1);outline:none;transition:border-color var(--t)}
+.sb-search input::placeholder{color:var(--t4)}
+.sb-search input:focus{border-color:var(--acc)}
+.sb-search svg{position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--t4);pointer-events:none}
+.sb-nav{flex:1;overflow-y:auto;overflow-x:hidden;padding:6px 0 20px;scrollbar-width:thin;scrollbar-color:var(--bdr) transparent}
+.sb-nav::-webkit-scrollbar{width:3px}
+.sb-nav::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:3px}
+.ng{margin-bottom:2px}
+.ng-title{padding:10px 14px 4px;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.3px;color:var(--t4)}
+.ni{display:flex;align-items:center;gap:7px;padding:7px 14px;font-size:13px;color:var(--t2);cursor:pointer;transition:background var(--t),color var(--t);position:relative;line-height:1.4}
+.ni:hover{background:var(--acd);color:var(--acc)}
+.ni.active{background:var(--acd);color:var(--acc);font-weight:600}
+.ni.active::before{content:'';position:absolute;left:0;top:20%;bottom:20%;width:3px;background:var(--acc);border-radius:0 3px 3px 0}
+.ni svg.ck{width:14px;height:14px;flex-shrink:0;color:var(--bdr);transition:color var(--t)}
+.ni.done svg.ck{color:var(--grn)}
+.ni.active svg.ck{color:var(--acc)}
+.sb-prog{padding:10px 14px 12px;border-top:1px solid var(--bdr);flex-shrink:0}
+.prog-row{display:flex;justify-content:space-between;margin-bottom:6px;font-size:11.5px}
+.prog-row span:first-child{color:var(--t3)}
+.prog-row span:last-child{font-weight:600;color:var(--acc)}
+.prog-track{height:5px;background:var(--sur2);border-radius:50px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--acc),#34d1bf);border-radius:50px;width:2%;transition:width .5s var(--ease)}
+.sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:399;backdrop-filter:blur(2px)}
+.sb-overlay.show{display:block}
+
+/* Main */
+.main{margin-left:var(--sb-w);flex:1;min-width:0;display:flex}
+
+/* Article */
+article{flex:1;min-width:0;padding:36px 44px 80px;max-width:840px}
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--t3);margin-bottom:22px;flex-wrap:wrap}
+.breadcrumb a{color:var(--acc);transition:opacity var(--t)}
+.breadcrumb a:hover{opacity:.75}
+.bc-sep{color:var(--t4);font-size:11px}
+.art-header{margin-bottom:26px}
+.art-meta{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.tag{display:inline-flex;align-items:center;padding:3px 9px;border-radius:50px;font-size:11px;font-weight:600;letter-spacing:.3px}
+.tag-beg{background:var(--grnd);color:var(--grn)}
+.tag-upd{background:var(--acd);color:var(--acc)}
+.tag-pop{background:var(--ambd);color:var(--amb)}
+h1.art-title{font-family:'Syne',sans-serif;font-size:clamp(22px,3.5vw,34px);font-weight:800;color:var(--t1);line-height:1.2;margin-bottom:10px;letter-spacing:-.5px}
+.art-intro{font-size:15.5px;color:var(--t2);line-height:1.8;max-width:620px;font-weight:400}
+.art-updated{font-size:12px;color:var(--t4);margin-top:10px;display:flex;align-items:center;gap:5px}
+.divider{height:1px;background:var(--bdr);margin:28px 0}
+
+/* Content typography */
+article h2{font-family:'Syne',sans-serif;font-size:19px;font-weight:700;color:var(--t1);margin:34px 0 14px;padding-top:6px;display:flex;align-items:center;gap:8px}
+article h2::before{content:'';display:inline-block;width:4px;height:19px;background:var(--acc);border-radius:2px;flex-shrink:0}
+article h3{font-family:'Syne',sans-serif;font-size:15.5px;font-weight:700;color:var(--t1);margin:22px 0 10px}
+article p{font-size:15px;color:var(--t2);line-height:1.8;margin-bottom:14px}
+article p:last-child{margin-bottom:0}
+article strong{color:var(--t1);font-weight:600}
+article em{color:var(--t2)}
+article a.inline-link{color:var(--acc);border-bottom:1px solid var(--acd)}
+article a.inline-link:hover{border-color:var(--acc)}
+article code{font-family:'JetBrains Mono',monospace;font-size:12.5px;background:var(--sur2);border:1px solid var(--bdr);color:var(--acc);padding:2px 6px;border-radius:4px}
+article ul,article ol{padding-left:22px;margin-bottom:14px;display:flex;flex-direction:column;gap:5px}
+article li{font-size:15px;color:var(--t2);line-height:1.7;padding-left:4px}
+article li::marker{color:var(--acc)}
+
+/* Callout */
+.callout{border-radius:var(--r2);padding:14px 16px;margin:18px 0;display:flex;gap:11px;font-size:14px;line-height:1.7}
+.callout-ico{font-size:17px;flex-shrink:0;margin-top:1px}
+.callout-body{flex:1}
+.callout-body strong{display:block;font-size:12.5px;font-weight:700;margin-bottom:2px}
+.callout-body p{font-size:13.5px;color:inherit;margin:0}
+.c-note{background:var(--bld);color:#1e40af;border-left:3px solid #3b82f6}
+.c-tip{background:var(--grnd);color:#15803d;border-left:3px solid var(--grn)}
+.c-warn{background:var(--ambd);color:#92400e;border-left:3px solid var(--amb)}
+.c-danger{background:var(--redd);color:#991b1b;border-left:3px solid var(--red)}
+body.dark .c-note{color:#93c5fd}
+body.dark .c-tip{color:#86efac}
+body.dark .c-warn{color:#fcd34d}
+body.dark .c-danger{color:#fca5a5}
+
+/* Syntax box */
+.syn-box{background:var(--sur2);border:1px solid var(--bdr);border-radius:var(--r2);padding:14px 18px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--t1);line-height:1.7}
+.syn-lbl{font-family:'Outfit',sans-serif;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--t4);margin-bottom:7px}
+.sk{color:#c792ea}.st{color:#f07178}.sa{color:#ffcb6b}.ss{color:#c3e88d}.so{color:var(--t3);font-style:italic}
+
+/* Code block */
+.cb{margin:20px 0;border-radius:var(--r3);overflow:hidden;box-shadow:var(--sh2);border:1px solid rgba(255,255,255,.04)}
+.cb-head{display:flex;align-items:center;padding:0 14px;height:40px;background:var(--cdsr);border-bottom:1px solid rgba(255,255,255,.06);gap:10px}
+.cb-dots{display:flex;gap:6px}
+.cb-dots span{width:11px;height:11px;border-radius:50%}
+.cb-dots span:nth-child(1){background:#ff5f57}
+.cb-dots span:nth-child(2){background:#febc2e}
+.cb-dots span:nth-child(3){background:#28c840}
+.cb-lang{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:500;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1px;flex:1}
+.cb-copy{height:26px;padding:0 10px;border-radius:5px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);font-size:11.5px;font-family:'Outfit',sans-serif;font-weight:500;display:flex;align-items:center;gap:4px;transition:background var(--t),color var(--t)}
+.cb-copy:hover{background:rgba(255,255,255,.12);color:rgba(255,255,255,.85)}
+.cb-copy.ok{color:#86efac;border-color:rgba(134,239,172,.3)}
+.cb-body{background:var(--cdbg);padding:18px 22px;overflow-x:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.08) transparent}
+.cb-body::-webkit-scrollbar{height:3px}
+.cb-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:3px}
+pre{font-family:'JetBrains Mono',monospace;font-size:13.5px;line-height:1.85;color:#e6edf3;white-space:pre;tab-size:2}
+pre.ln{counter-reset:line}
+pre.ln .L{display:block;counter-increment:line}
+pre.ln .L::before{content:counter(line);display:inline-block;width:26px;text-align:right;margin-right:18px;color:rgba(255,255,255,.15);font-size:11.5px;user-select:none}
+.xt{color:#f07178}.xa{color:#ffcb6b}.xs{color:#c3e88d}.xk{color:#c792ea}.xc{color:#546e7a;font-style:italic}.xn{color:#82aaff}.xp{color:#89ddff}
+
+/* Try-it editor */
+.tryit{margin:22px 0;border:1px solid var(--bdr);border-radius:var(--r3);overflow:hidden;box-shadow:var(--sh2)}
+.tryit-head{display:flex;align-items:center;justify-content:space-between;padding:0 14px;height:42px;background:var(--sur);border-bottom:1px solid var(--bdr)}
+.tryit-tabs{display:flex}
+.tt{padding:0 12px;height:42px;font-size:12.5px;font-weight:600;color:var(--t3);background:none;border:none;border-bottom:2px solid transparent;transition:color var(--t),border-color var(--t)}
+.tt.on{color:var(--acc);border-bottom-color:var(--acc)}
+.tryit-run{display:flex;align-items:center;gap:5px;height:30px;padding:0 14px;background:var(--acc);color:#fff;border:none;border-radius:var(--r1);font-size:12.5px;font-weight:600;transition:opacity var(--t)}
+.tryit-run:hover{opacity:.88}
+.tryit-panels{display:grid;grid-template-columns:1fr 1fr;min-height:160px}
+.tryit-ed{background:var(--cdbg);border-right:1px solid rgba(255,255,255,.06)}
+.tryit-ed textarea{width:100%;height:100%;min-height:220px;background:transparent;border:none;outline:none;padding:14px 18px;font-family:'JetBrains Mono',monospace;font-size:13px;color:#e6edf3;line-height:1.8;resize:none;tab-size:2}
+.tryit-out{background:#fff;color:var(--t1);padding:14px 18px;min-height:220px;font-size:14px;line-height:1.6;overflow:auto;}
+body.dark .tryit-out{background:#161b22;color:#e6edf3;}
+.tryit-bar{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--t3);padding:7px 14px;background:var(--sur2);border-top:1px solid var(--bdr);display:flex;align-items:center;gap:6px}
+.out-dot{width:7px;height:7px;border-radius:50%;background:var(--grn)}
+
+/* Table */
+.ct{width:100%;border-collapse:collapse;margin:18px 0;font-size:13.5px;border-radius:var(--r2);overflow:hidden;border:1px solid var(--bdr);box-shadow:var(--sh1)}
+.ct th{background:var(--sur2);padding:10px 14px;text-align:left;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--t2);border-bottom:1px solid var(--bdr)}
+.ct td{padding:9px 14px;border-bottom:1px solid var(--bdrl);color:var(--t2);vertical-align:top;line-height:1.6}
+.ct tr:last-child td{border-bottom:none}
+.ct tr:hover td{background:var(--acd)}
+.ct code{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--acc);background:var(--sur2);padding:1px 5px;border-radius:3px}
+
+/* Nav footer */
+.nav-footer{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:44px;padding-top:28px;border-top:1px solid var(--bdr)}
+.npb{display:flex;align-items:center;gap:11px;padding:13px 16px;background:var(--sur);border:1px solid var(--bdr);border-radius:var(--r2);cursor:pointer;transition:border-color var(--t),box-shadow var(--t),transform var(--t);color:var(--t1)}
+.npb:hover{border-color:var(--acc);box-shadow:0 0 0 3px var(--acg);transform:translateY(-1px)}
+.npb.nxt{flex-direction:row-reverse;text-align:right}
+.npb svg{width:17px;height:17px;color:var(--acc);flex-shrink:0}
+.npb-lbl{font-size:10.5px;color:var(--t3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px}
+.npb-ttl{font-size:13.5px;font-weight:600;font-family:'Syne',sans-serif;color:var(--t1)}
+
+/* Quiz CTA */
+.quiz-cta{background:linear-gradient(135deg,var(--acc),#0e6085);border-radius:var(--r3);padding:24px 28px;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:16px;margin:36px 0 0;flex-wrap:wrap}
+.quiz-cta h3{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;margin-bottom:3px}
+.quiz-cta p{font-size:13px;color:rgba(255,255,255,.75)}
+.quiz-cta-btn{height:36px;padding:0 18px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:var(--r1);color:#fff;font-size:13px;font-weight:600;white-space:nowrap;transition:background var(--t)}
+.quiz-cta-btn:hover{background:rgba(255,255,255,.25)}
+
+/* Ad column */
+.ad-col{width:var(--ad-w);flex-shrink:0;padding:24px 18px 24px 12px;display:flex;flex-direction:column;gap:14px;position:sticky;top:calc(var(--prog-h) + var(--nav-h) + var(--strip-h));align-self:flex-start;max-height:calc(100vh - var(--prog-h) - var(--nav-h) - var(--strip-h));overflow-y:auto;scrollbar-width:none}
+.ad-col::-webkit-scrollbar{display:none}
+.ad-card{background:var(--sur);border:1px solid var(--bdr);border-radius:var(--r3);overflow:hidden;box-shadow:var(--sh1)}
+.ad-lbl{padding:6px 12px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--t4);background:var(--sur2);border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between}
+.ad-slot{min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:20px 14px;background:repeating-linear-gradient(-45deg,transparent,transparent 10px,rgba(0,0,0,.012) 10px,rgba(0,0,0,.012) 20px);color:var(--t4);font-size:11.5px;text-align:center}
+body.dark .ad-slot{background:repeating-linear-gradient(-45deg,transparent,transparent 10px,rgba(255,255,255,.015) 10px,rgba(255,255,255,.015) 20px)}
+.ad-slot svg{opacity:.18}
+.promo-c{padding:16px}
+.promo-emoji{font-size:24px;margin-bottom:8px}
+.promo-c h4{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--t1);margin-bottom:5px;line-height:1.3}
+.promo-c p{font-size:12px;color:var(--t3);line-height:1.6;margin-bottom:10px}
+.promo-btn{display:block;width:100%;padding:8px;background:var(--acc);color:#fff;border:none;border-radius:var(--r1);font-size:12.5px;font-weight:600;text-align:center;transition:opacity var(--t)}
+.promo-btn:hover{opacity:.88}
+.trend-list{padding:4px 0}
+.trend-item{display:flex;align-items:center;gap:8px;padding:8px 12px;font-size:12.5px;color:var(--t2);border-bottom:1px solid var(--bdrl);transition:background var(--t),color var(--t);cursor:pointer}
+.trend-item:last-child{border-bottom:none}
+.trend-item:hover{background:var(--acd);color:var(--acc)}
+.trend-badge{padding:2px 6px;border-radius:4px;font-size:9.5px;font-weight:700;flex-shrink:0;font-family:'Syne',sans-serif}
+.trend-num{margin-left:auto;font-size:10.5px;color:var(--t4);flex-shrink:0}
+
+/* Scroll top */
+#scrtop{position:fixed;bottom:24px;right:24px;width:38px;height:38px;background:var(--acc);color:#fff;border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:var(--sh2);opacity:0;transform:translateY(8px);transition:opacity var(--t),transform var(--t);z-index:300;pointer-events:none}
+#scrtop.show{opacity:1;transform:translateY(0);pointer-events:auto}
+#scrtop:hover{opacity:.88}
+
+/* Responsive */
+@media(max-width:1280px){.ad-col{display:none}article{max-width:100%}}
+@media(max-width:900px){.hamburger{display:flex}.nav-search{max-width:180px}.nav-hint{display:none}.sidebar{transform:translateX(-100%);z-index:401}.sidebar.open{transform:translateX(0)}.main{margin-left:0}article{padding:24px 18px 60px}.tryit-panels{grid-template-columns:1fr}.tryit-ed{border-right:none;border-bottom:1px solid rgba(255,255,255,.06)}.nav-footer{grid-template-columns:1fr}}
+@media(max-width:480px){.nav-search{display:none}article{padding:18px 14px 60px}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.art-header{animation:fadeUp .4s var(--ease) both}
+  </style>
+</head>
+<body>
+
+<div id="rp"><div id="rpb"></div></div>
+
+<header class="navbar">
+  <div class="nav-in">
+    <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <a href="index.html" class="nav-logo" style="text-decoration: none;">
+      <div class="logo-mark">&lt;/&gt;</div>
+      <span class="logo-name">TpointTech</span>
+    </a>
+    <div class="nav-search">
+      <input type="text" placeholder="Search tutorials… (Ctrl+K)" id="gsearch" autocomplete="off"/>
+      <svg class="nav-search-ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </div>
+    <div class="nav-right">
+      <button class="theme-btn" id="themeBtn" title="Toggle dark mode">🌙</button>
+      <button class="nav-btn-signin">Sign In</button>
+    </div>
+  </div>
+</header>
+
+<nav class="tstrip" aria-label="Tutorial topics">
+  <div class="tstrip-in">
+    <a href="html.html">HTML</a>
+    <a href="css.html">CSS</a>
+    <a href="javascript.html">JavaScript</a>
+    <a href="sql.html">SQL</a>
+    <a href="python.html">Python</a>
+    <a href="java.html">Java</a>
+    <a href="php.html">PHP</a>
+    <a href="c.html">C</a>
+    <a href="cpp.html">C++</a>
+    <a href="bootstrap.html">Bootstrap</a>
+    <a href="react.html">React</a>
+    <a href="mysql.html">MySQL</a>
+    <a href="jquery.html" class="active">jQuery</a>
+    <a href="nodejs.html">Node.js</a>
+    <a href="django.html">Django</a>
+    <a href="dsa.html">DSA</a>
+    <a href="dsa-cpp.html">DSA C++</a>
+    <a href="dsa-java.html">DSA Java</a>
+    <a href="mongodb.html">MongoDB</a>
+    <a href="nextjs.html">Next.js</a>
+    <a href="angular.html">Angular</a>
+  </div>
+</nav>
+
+<div class="sb-overlay" id="sbOverlay"></div>
+
+<div class="shell">
+
+  <aside class="sidebar" id="sidebar" aria-label="jQuery Tutorial navigation">
+    <div class="sb-top">
+      <div class="sb-lang">
+        <div class="lang-badge">jQ</div>
+        <div class="sb-info">
+          <h3>jQuery Tutorial</h3>
+          <span>32 topics &middot; Beginner to Pro</span>
+        </div>
+      </div>
+      <div class="sb-search">
+        <input type="text" placeholder="Search topics…" id="sbSearch" autocomplete="off"/>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+    </div>
+    <nav class="sb-nav" id="sbNav">
+      <div class="ng">
+        <div class="ng-title">jQuery Basic</div>
+        <a class="ni active" href="jquery.html" data-t="jQuery Introduction"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery Intro</a>
+        <a class="ni" href="#" data-t="jQuery Get Started"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery Get Started</a>
+        <a class="ni" href="#" data-t="jQuery Syntax"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery Syntax</a>
+        <a class="ni" href="#" data-t="jQuery Selectors"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery Selectors</a>
+        <a class="ni" href="#" data-t="jQuery Events"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery Events</a>
+      </div>
+      <div class="ng">
+        <div class="ng-title">jQuery Effects</div>
+        <a class="ni" href="#" data-t="jQuery Hide/Show"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery Hide/Show</a>
+        <a class="ni" href="#" data-t="jQuery Fade"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery Fade</a>
+        <a class="ni" href="#" data-t="jQuery Slide"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery Slide</a>
+        <a class="ni" href="#" data-t="jQuery Animate"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery Animate</a>
+        <a class="ni" href="#" data-t="jQuery stop()"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery stop()</a>
+        <a class="ni" href="#" data-t="jQuery Callback"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery Callback</a>
+        <a class="ni" href="#" data-t="jQuery Chaining"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery Chaining</a>
+      </div>
+      <div class="ng">
+        <div class="ng-title">jQuery HTML</div>
+        <a class="ni" href="#" data-t="jQuery Get"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery Get</a>
+        <a class="ni" href="#" data-t="jQuery Set"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery Set</a>
+        <a class="ni" href="#" data-t="jQuery Add"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery Add</a>
+        <a class="ni" href="#" data-t="jQuery Remove"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery Remove</a>
+        <a class="ni" href="#" data-t="jQuery CSS Classes"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery CSS Classes</a>
+        <a class="ni" href="#" data-t="jQuery css()"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery css()</a>
+        <a class="ni" href="#" data-t="jQuery Dimensions"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery Dimensions</a>
+      </div>
+      <div class="ng">
+        <div class="ng-title">jQuery Traversing</div>
+        <a class="ni" href="#" data-t="jQuery Traversing"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery Traversing</a>
+        <a class="ni" href="#" data-t="jQuery Ancestors"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery Ancestors</a>
+        <a class="ni" href="#" data-t="jQuery Descendants"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery Descendants</a>
+        <a class="ni" href="#" data-t="jQuery Siblings"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery Siblings</a>
+        <a class="ni" href="#" data-t="jQuery Filtering"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery Filtering</a>
+      </div>
+      <div class="ng">
+        <div class="ng-title">jQuery AJAX</div>
+        <a class="ni" href="#" data-t="jQuery AJAX Intro"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery AJAX Intro</a>
+        <a class="ni" href="#" data-t="jQuery Load"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery Load</a>
+        <a class="ni" href="#" data-t="jQuery Get/Post"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>jQuery Get/Post</a>
+      </div>
+    </nav>
+    <div class="sb-prog">
+      <div class="prog-row"><span>Your progress</span><span id="progPct">0%</span></div>
+      <div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <article id="art">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html">Home</a><span class="bc-sep">›</span>
+        <a href="jquery.html">jQuery Tutorial</a><span class="bc-sep">›</span>
+        <span>jQuery Introduction</span>
+      </nav>
+
+      <header class="art-header">
+        <div class="art-meta">
+          <span class="tag tag-beg">✦ Beginner</span>
+          <span class="tag tag-pop">🔥 Legacy Library</span>
+        </div>
+        <h1 class="art-title">jQuery Introduction</h1>
+        <p class="art-intro">jQuery is a fast, small, and feature-rich JavaScript library. It makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler.</p>
+        <div class="art-updated">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          Last updated: 27 March 2026 &nbsp;&middot;&nbsp; 4 min read &nbsp;&middot;&nbsp; Topic 1 of 32
+        </div>
+      </header>
+
+      <div class="divider"></div>
+
+      <h2 id="what">What is jQuery?</h2>
+      <p>jQuery is a lightweight, "write less, do more" JavaScript library.</p>
+      <p>The purpose of jQuery is to make it much easier to use JavaScript on your website. jQuery takes a lot of common tasks that require many lines of JavaScript code to accomplish, and wraps them into methods that you can call with a single line of code.</p>
+      
+      <ul>
+        <li>HTML/DOM manipulation</li>
+        <li>CSS manipulation</li>
+        <li>HTML event methods</li>
+        <li>Effects and animations</li>
+        <li>AJAX</li>
+        <li>Utilities</li>
+      </ul>
+
+      <div class="callout c-tip">
+        <span class="callout-ico">💡</span>
+        <div class="callout-body">
+          <strong>Is jQuery still relevant?</strong>
+          <p>While modern Vanilla JavaScript has adopted many of jQuery's best features (like <code>querySelector</code>), jQuery is still actively used in millions of legacy websites and massive platforms like WordPress.</p>
+        </div>
+      </div>
+
+      <h2 id="syntax">jQuery Syntax</h2>
+      <p>The jQuery syntax is tailor-made for selecting HTML elements and performing some action on the element(s).</p>
+      <p>Basic syntax is: <code>$(selector).action()</code></p>
+      <ul>
+        <li>A <code>$</code> sign to define/access jQuery</li>
+        <li>A <code>(selector)</code> to "query (or find)" HTML elements</li>
+        <li>A <code>action()</code> to be performed on the element(s)</li>
+      </ul>
+
+      <div class="syn-box">
+        <div class="syn-lbl">Syntax Example</div>
+        <span class="sk">$</span>(<span class="sa">this</span>).<span class="xa">hide</span>(); <span class="so">// hides the current element.</span><br>
+        <span class="sk">$</span>(<span class="ss">"p"</span>).<span class="xa">hide</span>(); <span class="so">// hides all &lt;p&gt; elements.</span><br>
+        <span class="sk">$</span>(<span class="ss">".test"</span>).<span class="xa">hide</span>(); <span class="so">// hides all elements with class="test".</span><br>
+        <span class="sk">$</span>(<span class="ss">"#test"</span>).<span class="xa">hide</span>(); <span class="so">// hides the element with id="test".</span>
+      </div>
+
+      <h2 id="tryit">Try It Yourself</h2>
+      <p>Click "Run Code" to see how jQuery can easily attach a click event to a button and hide paragraph tags!</p>
+
+      <div class="tryit">
+        <div class="tryit-head">
+          <div class="tryit-tabs"><button class="tt on">index.html</button></div>
+          <button class="tryit-run" onclick="runCode()">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l14 9-14 9V3z"/></svg>
+            Run Code
+          </button>
+        </div>
+        <div class="tryit-panels">
+          <div class="tryit-ed">
+            <textarea id="tryCode" spellcheck="false">&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+$(document).ready(function(){
+  $("button").click(function(){
+    $("p").hide();
+  });
+});
+&lt;/script&gt;
+
+&lt;h2&gt;This is a heading&lt;/h2&gt;
+&lt;p&gt;This is a paragraph.&lt;/p&gt;
+&lt;p&gt;This is another paragraph.&lt;/p&gt;
+&lt;button&gt;Click me to hide paragraphs&lt;/button&gt;</textarea>
+          </div>
+          <div class="tryit-out" id="tryOut">
+            <div id="jq-sim-container">
+              <h2 style="font-size: 1.5em; margin-bottom: 0.5em; color: var(--t1);">This is a heading</h2>
+              <p class="jq-target" style="margin-bottom: 1em; color: var(--t2);">This is a paragraph.</p>
+              <p class="jq-target" style="margin-bottom: 1em; color: var(--t2);">This is another paragraph.</p>
+              <button id="jq-btn" style="padding: 6px 12px; cursor: pointer; background: var(--sur2); border: 1px solid var(--bdr); color: var(--t1); border-radius: 4px;">Click me to hide paragraphs</button>
+            </div>
+          </div>
+        </div>
+        <div class="tryit-bar"><span class="out-dot"></span> Simulated jQuery Browser Output</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="quiz-cta">
+        <div>
+          <h3>Test Your Knowledge 🎯</h3>
+          <p>Take a 5-question quiz on jQuery Basics and earn your first badge.</p>
+        </div>
+        <button class="quiz-cta-btn">Start Quiz →</button>
+      </div>
+
+      <nav class="nav-footer" aria-label="Page navigation">
+        <a class="npb" href="index.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          <div><div class="npb-lbl">Previous</div><div class="npb-ttl">Home</div></div>
+        </a>
+        <a class="npb nxt" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          <div><div class="npb-lbl">Next</div><div class="npb-ttl">jQuery Get Started</div></div>
+        </a>
+      </nav>
+    </article>
+
+    <aside class="ad-col" aria-label="Sidebar ads">
+      <div class="ad-card">
+        <div class="ad-lbl"><span>Advertisement</span><span>728&times;90</span></div>
+        <div class="ad-slot">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          <div>Your ad here</div>
+        </div>
+      </div>
+      <div class="ad-card">
+        <div class="promo-c">
+          <div class="promo-emoji">⚡</div>
+          <h4>Master AJAX</h4>
+          <p>Learn how to update parts of a web page without reloading the whole page using jQuery AJAX.</p>
+          <button class="promo-btn">Start Learning Free</button>
+        </div>
+      </div>
+      <div class="ad-card">
+        <div class="ad-lbl"><span>Advertisement</span><span>300&times;250</span></div>
+        <div class="ad-slot" style="min-height:240px">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          <div>Your ad here</div>
+        </div>
+      </div>
+      <div class="ad-card">
+        <div class="ad-lbl"><span>Trending Now</span></div>
+        <div class="trend-list">
+          <div class="trend-item"><span class="trend-badge" style="background:#fee2e2;color:#dc2626">HTML</span>Semantic Tags Guide<span class="trend-num">12k</span></div>
+          <div class="trend-item"><span class="trend-badge" style="background:#dbeafe;color:#1d4ed8">CSS</span>Flexbox Cheatsheet<span class="trend-num">9.4k</span></div>
+          <div class="trend-item"><span class="trend-badge" style="background:#fef9c3;color:#854d0e">JS</span>Array Methods 2026<span class="trend-num">8.1k</span></div>
+          <div class="trend-item"><span class="trend-badge" style="background:#dcfce7;color:#15803d">Python</span>List Comprehensions<span class="trend-num">7.8k</span></div>
+          <div class="trend-item"><span class="trend-badge" style="background:#ede9fe;color:#6d28d9">React</span>Hooks Deep Dive<span class="trend-num">6.2k</span></div>
+        </div>
+      </div>
+      <div class="ad-card">
+        <div class="promo-c">
+          <div class="promo-emoji">📄</div>
+          <h4>jQuery Cheatsheet</h4>
+          <p>All essential jQuery selectors and events in one printable PDF. Free download.</p>
+          <button class="promo-btn" style="background:#16a34a">Download Free PDF</button>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<button id="scrtop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<script>
+// Theme
+const themeBtn=document.getElementById('themeBtn');
+if (themeBtn) {
+  function applyTheme(dark){document.body.classList.toggle('dark',dark);themeBtn.textContent=dark?'☀️':'🌙';localStorage.setItem('tpt-theme',dark?'dark':'light')}
+  applyTheme(localStorage.getItem('tpt-theme')==='dark');
+  themeBtn.addEventListener('click',()=>applyTheme(!document.body.classList.contains('dark')));
+}
+
+// Reading progress
+const rpb=document.getElementById('rpb');
+const art=document.getElementById('art');
+window.addEventListener('scroll',()=>{
+  const r=art.getBoundingClientRect();
+  const tot=art.offsetHeight-window.innerHeight;
+  const pct=Math.min(100,Math.max(0,(-r.top/tot)*100));
+  rpb.style.width=pct+'%';
+  document.getElementById('scrtop').classList.toggle('show',window.scrollY>400);
+},{passive:true});
+
+// Sidebar toggle
+const hamburger=document.getElementById('hamburger');
+const sidebar=document.getElementById('sidebar');
+const sbOverlay=document.getElementById('sbOverlay');
+hamburger.addEventListener('click',()=>{sidebar.classList.toggle('open');sbOverlay.classList.toggle('show')});
+sbOverlay.addEventListener('click',()=>{sidebar.classList.remove('open');sbOverlay.classList.remove('show')});
+
+// Sidebar search
+document.getElementById('sbSearch').addEventListener('input',function(){
+  const q=this.value.toLowerCase();
+  document.querySelectorAll('.ni').forEach(n=>{n.style.display=(!q||n.dataset.t.toLowerCase().includes(q))?'':'none'});
+  document.querySelectorAll('.ng-title').forEach(t=>{
+    const g=t.parentElement;
+    t.style.display=[...g.querySelectorAll('.ni')].some(i=>i.style.display!=='none')?'':'none';
+  });
+});
+
+// Nav item clicks + progress
+function updateProg(){
+  const total=document.querySelectorAll('.ni').length;
+  const done=document.querySelectorAll('.ni.done').length;
+  const pct=Math.round((done/total)*100);
+  document.getElementById('progPct').textContent=pct+'%';
+  document.getElementById('progFill').style.width=pct+'%';
+}
+document.querySelectorAll('.ni').forEach(item=>{
+  item.addEventListener('click',function(e){
+    if(this.getAttribute('href')==='#')e.preventDefault();
+    document.querySelectorAll('.ni').forEach(i=>i.classList.remove('active'));
+    this.classList.add('active','done');
+    updateProg();
+    if(window.innerWidth<=900){sidebar.classList.remove('open');sbOverlay.classList.remove('show')}
+  });
+});
+
+// jQuery Try-it editor execution (Safe Simulation)
+function runCode(){
+  const code = document.getElementById('tryCode').value;
+  const outputDiv = document.getElementById('tryOut');
+  
+  if(code.includes('$("p").hide();') && code.includes('<button>')) {
+    outputDiv.innerHTML = `
+      <div id="jq-sim-container">
+        <h2 style="font-size: 1.5em; margin-bottom: 0.5em; color: var(--t1);">This is a heading</h2>
+        <p class="jq-target" style="margin-bottom: 1em; color: var(--t2);">This is a paragraph.</p>
+        <p class="jq-target" style="margin-bottom: 1em; color: var(--t2);">This is another paragraph.</p>
+        <button id="jq-btn" style="padding: 6px 12px; cursor: pointer; background: var(--sur2); border: 1px solid var(--bdr); color: var(--t1); border-radius: 4px;">Click me to hide paragraphs</button>
+      </div>
+    `;
+    
+    // Attach Vanilla JS event listener to simulate the jQuery action safely
+    setTimeout(() => {
+      const btn = document.getElementById('jq-btn');
+      if(btn) {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.jq-target').forEach(p => p.style.display = 'none');
+        });
+      }
+    }, 50);
+    
+  } else {
+    outputDiv.innerHTML = `
+      <p style="color:var(--t3);font-family:'JetBrains Mono', monospace;font-size:12px;">
+      [Simulation Mode]<br>
+      Please use the default code structure to see the simulated jQuery hide() effect, as loading external libraries dynamically is disabled for security.
+      </p>
+    `;
+  }
+}
+
+// Initial binding for the default loaded code
+document.getElementById('jq-btn')?.addEventListener('click', function() {
+  document.querySelectorAll('.jq-target').forEach(p => p.style.display = 'none');
+});
+
+document.getElementById('tryCode').addEventListener('keydown',function(e){
+  if(e.key==='Tab'){e.preventDefault();const s=this.selectionStart;this.value=this.value.substring(0,s)+'  '+this.value.substring(this.selectionEnd);this.selectionStart=this.selectionEnd=s+2}
+});
+
+// Global search shortcut
+document.addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();document.getElementById('gsearch').focus()}
+  if(e.key==='Escape')document.getElementById('gsearch').blur();
+});
+</script>
+</body>
+</html>
