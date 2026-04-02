@@ -488,6 +488,11 @@ body.dark .nav-btn{
 .courses-container {
   margin: 40px auto;   /* perfect center spacing */
 }
+.course-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
 
 
 /* ── Banner ── */
