@@ -64,14 +64,14 @@ const slider = document.getElementById("slider");
 
 function slideLeft() {
   slider.scrollBy({
-    left: -680,
+    left: -883,
     behavior: "smooth"
   });
 }
 
 function slideRight() {
   slider.scrollBy({
-    left: 680,
+    left: 883,
     behavior: "smooth"
   });
 }
