@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Sign in or create an account at CodyVerse to save your progress, earn badges, and track your coding journey."/>
+  <title>Sign In / Sign Up — CodyVerse</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+/* Core Variables */
+:root{--nav-h:62px;--prog-h:0px;--ease:cubic-bezier(.4,0,.2,1);--t:.18s;--bg:#f7f8fa;--sur:#fff;--sur2:#f0f2f5;--bdr:#e3e6ea;--bdrl:#edf0f3;--t1:#0d1117;--t2:#3d4451;--t3:#6b7280;--t4:#9ca3af;--acc:#1a7fa8;--acd:#e8f4f9;--acg:rgba(26,127,168,.15);--grn:#16a34a;--grnd:#dcfce7;--amb:#d97706;--ambd:#fef3c7;--red:#dc2626;--redd:#fee2e2;--bld:#dbeafe;--nvbg:#0f2435;--sbbg:#fff;--cdbg:#0d1117;--cdsr:#161b22;--sh1:0 1px 3px rgba(0,0,0,.06);--sh2:0 4px 12px rgba(0,0,0,.08);--sh3:0 12px 32px rgba(0,0,0,.10);--r1:6px;--r2:10px;--r3:14px}
+body.dark{--bg:#0d1117;--sur:#161b22;--sur2:#1c2330;--bdr:#21262d;--bdrl:#1c2330;--t1:#e6edf3;--t2:#b1bac4;--t3:#7d8590;--t4:#484f58;--acd:#0d2535;--grnd:#0a2818;--ambd:#2d1f04;--redd:#2a0a0a;--bld:#0c1a2e;--nvbg:#010409;--sbbg:#0d1117;--sh1:0 1px 3px rgba(0,0,0,.3);--sh2:0 4px 12px rgba(0,0,0,.4);--sh3:0 12px 32px rgba(0,0,0,.5)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--t1);line-height:1.7;overflow-x:hidden;transition:background var(--t),color var(--t); min-height: 100vh; display: flex; flex-direction: column;}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer}
+
+/* Navbar */
+.navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:var(--nvbg);z-index:500;border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-in{height:100%;padding:0 20px;display:flex;align-items:center;gap:14px}
+.nav-logo{display:flex;align-items:center;gap:9px;flex-shrink:0;margin-right:6px}
+.logo-mark{width:32px;height:32px;background:var(--acc);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:12px;color:#fff;flex-shrink:0}
+.logo-name{font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:#fff}
+.nav-right{display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0}
+.theme-btn{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;transition:background var(--t);font-size:15px; border:none;}
+.theme-btn:hover{background:rgba(255,255,255,.12);color:#fff}
+
+/* Auth Layout */
+.auth-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; padding: calc(var(--nav-h) + 40px) 20px 40px; }
+.auth-card { width: 100%; max-width: 440px; background: var(--sur); border: 1px solid var(--bdr); border-radius: var(--r3); box-shadow: var(--sh3); overflow: hidden; animation: fadeUp .4s var(--ease) both; }
+.auth-header { padding: 32px 32px 0; text-align: center; }
+.auth-title { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700; color: var(--t1); margin-bottom: 6px; letter-spacing: -0.5px; }
+.auth-subtitle { font-size: 14px; color: var(--t3); }
+
+/* Auth Tabs */
+.auth-tabs { display: flex; margin: 24px 32px 0; background: var(--sur2); border-radius: var(--r2); padding: 4px; position: relative; }
+.auth-tab { flex: 1; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 13.5px; font-weight: 600; color: var(--t3); background: transparent; border: none; border-radius: 6px; transition: color var(--t); position: relative; z-index: 2; }
+.auth-tab.active { color: var(--t1); }
+.tab-slider { position: absolute; top: 4px; left: 4px; bottom: 4px; width: calc(50% - 4px); background: var(--sur); border-radius: 6px; box-shadow: var(--sh1); transition: transform 0.3s var(--ease); z-index: 1; }
+.auth-tabs[data-active="signup"] .tab-slider { transform: translateX(100%); }
+
+/* Auth Forms */
+.auth-forms { padding: 32px; position: relative; }
+.form-view { display: none; animation: fadeIn .3s var(--ease) both; }
+.form-view.active { display: block; }
+.input-group { margin-bottom: 18px; }
+.input-group label { display: block; font-size: 13px; font-weight: 600; color: var(--t2); margin-bottom: 6px; }
+.auth-input { width: 100%; height: 44px; background: var(--sur2); border: 1px solid var(--bdr); border-radius: var(--r1); padding: 0 14px; font-family: 'Outfit', sans-serif; font-size: 14px; color: var(--t1); outline: none; transition: border-color var(--t), background var(--t); }
+.auth-input:focus { border-color: var(--acc); background: var(--sur); box-shadow: 0 0 0 3px var(--acg); }
+.auth-input::placeholder { color: var(--t4); }
+.auth-options { display: flex; align-items: center; justify-content: space-between; font-size: 13px; margin-bottom: 24px; }
+.auth-options label { display: flex; align-items: center; gap: 6px; color: var(--t2); cursor: pointer; }
+.auth-options a { color: var(--acc); font-weight: 600; }
+.auth-options a:hover { text-decoration: underline; }
+
+/* Buttons */
+.auth-submit { width: 100%; height: 46px; background: var(--acc); color: #fff; border: none; border-radius: var(--r1); font-size: 14.5px; font-weight: 600; display: flex; align-items: center; justify-content: center; transition: opacity var(--t), transform var(--t); margin-bottom: 24px; }
+.auth-submit:hover { opacity: .9; transform: translateY(-1px); }
+
+/* Social Login Divider */
+.auth-divider { display: flex; align-items: center; text-align: center; color: var(--t4); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 24px; }
+.auth-divider::before, .auth-divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--bdr); }
+.auth-divider span { padding: 0 12px; }
+
+/* Social Buttons */
+.social-login { display: flex; flex-direction: column; gap: 12px; }
+.social-btn { width: 100%; height: 44px; display: flex; align-items: center; justify-content: center; gap: 10px; background: var(--sur); border: 1px solid var(--bdr); border-radius: var(--r1); color: var(--t1); font-size: 14px; font-weight: 600; transition: background var(--t), border-color var(--t); }
+.social-btn:hover { background: var(--sur2); border-color: var(--t4); }
+.social-btn svg { width: 18px; height: 18px; }
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+</style>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="nav-in">
+    <a href="index.html" class="nav-logo">
+      <div class="logo-mark">&lt;/&gt;</div>
+      <span class="logo-name">CodyVerse</span>
+    </a>
+    <div class="nav-right">
+      <button class="theme-btn" id="themeBtn" title="Toggle dark mode">🌙</button>
+    </div>
+  </div>
+</header>
+
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h1 class="auth-title" id="authTitle">Welcome back</h1>
+      <p class="auth-subtitle" id="authSubtitle">Please enter your details to sign in.</p>
+    </div>
+
+    <div class="auth-tabs" id="authTabs" data-active="signin">
+      <div class="tab-slider"></div>
+      <button class="auth-tab active" onclick="switchTab('signin')">Sign In</button>
+      <button class="auth-tab" onclick="switchTab('signup')">Sign Up</button>
+    </div>
+
+    <div class="auth-forms">
+      <div id="signinView" class="form-view active">
+        <form onsubmit="event.preventDefault(); window.location.href='index.html';">
+          <div class="input-group">
+            <label for="signinEmail">Email Address</label>
+            <input type="email" id="signinEmail" class="auth-input" placeholder="name@example.com" required />
+          </div>
+          <div class="input-group">
+            <label for="signinPassword">Password</label>
+            <input type="password" id="signinPassword" class="auth-input" placeholder="••••••••" required />
+          </div>
+          <div class="auth-options">
+            <label><input type="checkbox"/> Remember me</label>
+            <a href="#">Forgot password?</a>
+          </div>
+          <button type="submit" class="auth-submit">Sign In</button>
+        </form>
+      </div>
+
+      <div id="signupView" class="form-view">
+        <form onsubmit="event.preventDefault(); window.location.href='index.html';">
+          <div class="input-group">
+            <label for="signupName">Full Name</label>
+            <input type="text" id="signupName" class="auth-input" placeholder="Ajay Singh" required />
+          </div>
+          <div class="input-group">
+            <label for="signupEmail">Email Address</label>
+            <input type="email" id="signupEmail" class="auth-input" placeholder="name@example.com" required />
+          </div>
+          <div class="input-group">
+            <label for="signupPassword">Password</label>
+            <input type="password" id="signupPassword" class="auth-input" placeholder="Create a strong password" required />
+          </div>
+          <button type="submit" class="auth-submit">Create Account</button>
+        </form>
+      </div>
+
+      <div class="auth-divider"><span>Or continue with</span></div>
+      <div class="social-login">
+        <button class="social-btn">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+          </svg>
+          Google
+        </button>
+        <button class="social-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+          </svg>
+          GitHub
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Theme Toggle Logic
+const themeBtn = document.getElementById('themeBtn');
+if (themeBtn) {
+  function applyTheme(dark) {
+    document.body.classList.toggle('dark', dark);
+    themeBtn.textContent = dark ? '☀️' : '🌙';
+    localStorage.setItem('tpt-theme', dark ? 'dark' : 'light');
+  }
+  applyTheme(localStorage.getItem('tpt-theme') === 'dark');
+  themeBtn.addEventListener('click', () => applyTheme(!document.body.classList.contains('dark')));
+}
+
+// Tab Switching Logic
+function switchTab(tab) {
+  const tabsContainer = document.getElementById('authTabs');
+  const title = document.getElementById('authTitle');
+  const subtitle = document.getElementById('authSubtitle');
+  const signinView = document.getElementById('signinView');
+  const signupView = document.getElementById('signupView');
+  const tabBtns = document.querySelectorAll('.auth-tab');
+
+  // Update slider position
+  tabsContainer.setAttribute('data-active', tab);
+
+  // Update button active states
+  tabBtns[0].classList.toggle('active', tab === 'signin');
+  tabBtns[1].classList.toggle('active', tab === 'signup');
+
+  // Update Forms & Text
+  if(tab === 'signin') {
+    title.textContent = "Welcome back";
+    subtitle.textContent = "Please enter your details to sign in.";
+    signinView.classList.add('active');
+    signupView.classList.remove('active');
+  } else {
+    title.textContent = "Create an account";
+    subtitle.textContent = "Start your coding journey with us today.";
+    signupView.classList.add('active');
+    signinView.classList.remove('active');
+  }
+}
+</script>
+</body>
+</html>
