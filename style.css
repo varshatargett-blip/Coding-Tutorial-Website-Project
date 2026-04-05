@@ -495,77 +495,45 @@ body.dark .nav-btn{
 
 /* ── Banner ── */
 .banner {
-  background: var(--bg-nav);
-  color: #fff;
-  padding: 72px 24px;
+  position: relative;
+  width: 100%;
+  height: 50vh; /* desktop height */
+  overflow: hidden;
 }
 
-.banner-inner {
-  max-width: 1280px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 48px;
-  align-items: center;
+.banner video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
 }
 
-.banner-text h2 {
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(22px, 3vw, 34px);
-  font-weight: 800;
-  margin-bottom: 12px;
-  line-height: 1.2;
+video::-webkit-media-controls {
+  display: none !important;
 }
 
-.banner-text p {
-  font-size: 15.5px;
-  color: rgba(255,255,255,0.7);
-  max-width: 500px;
-  margin-bottom: 28px;
-  line-height: 1.65;
+video::-webkit-media-controls-panel {
+  display: none !important;
 }
 
-.banner-btn {
-  display: inline-block;
-  background: var(--accent);
-  color: #fff;
-  padding: 13px 28px;
-  border-radius: 10px;
-  font-family: 'Syne', sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-  transition: opacity var(--transition), transform var(--transition);
-  letter-spacing: 0.2px;
+video::-webkit-media-controls-play-button {
+  display: none !important;
 }
-.banner-btn:hover { opacity: 0.88; transform: translateY(-2px); }
-
-.banner-stats {
-  display: flex;
-  gap: 36px;
+video {
+  pointer-events: none;
 }
 
-.stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  text-align: center;
+@media (max-width: 768px) {
+  .banner {
+    height: 10vh; /* mobile pe height kam */
+  }
 }
-
-.stat-num {
-  font-family: 'Syne', sans-serif;
-  font-size: 34px;
-  font-weight: 800;
-  color: #fff;
-  line-height: 1;
-}
-
-.stat-label {
-  font-size: 12.5px;
-  color: rgba(255,255,255,0.55);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 500;
+@media (max-width: 480px) {
+  .banner {
+    height: 10vh;
+  }
 }
 
 /* ── Footer ── */
@@ -675,13 +643,10 @@ body.dark .nav-btn{
   .hero-subtitle { max-width: 100%; margin: 0 auto 32px; }
   .search-bar { max-width: 100%; }
   .hero-visual { height: 240px; }
-  .banner-inner { grid-template-columns: 1fr; }
-  .banner-stats { justify-content: center; }
   .footer-inner { grid-template-columns: 1fr; gap: 40px; }
 }
 
 @media (max-width: 640px) {
   .nav-topics { display: none; }
   .courses-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
-  .banner-stats { flex-wrap: wrap; gap: 24px; }
 }
